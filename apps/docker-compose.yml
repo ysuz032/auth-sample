@@ -1,0 +1,36 @@
+services:
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+      args:
+        API_BASE_URL: http://mise-user:8080 #ビルド時に必要
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mise-user
+
+  mise-user:
+    build:
+      context: ./mise-user
+      dockerfile: Dockerfile
+    environment:
+      - ENV=development
+      - DB_HOST=db
+      - DB_USERNAME=admin
+      - DB_PASSWORD=adP@ssmin
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  
+  db:
+    build:
+      context: ./db-user
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adP@ssmin
+      POSTGRES_DB: userdb
+    ports:
+      - "5432:5432"

@@ -1,19 +1,16 @@
-<!-- pages/login.vue -->
+<!-- pages/register.vue -->
 <template>
   <div class="flex flex-col items-center justify-center py-2">
-    <PageTitle title="Login" />
-    <button
-      @click="navigateToRegister"
-      class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-    ユーザ登録はこちら
-    </button>
+    <PageTitle title="Register" />
     <form @submit.prevent="handleSubmit" class="w-full max-w-sm">
-      <p v-if="form.error" class="mb-3 px-3 py-1.5 w-full border rounded border-red-400 text-sm text-center text-red-400">
-          {{ form.error }}
-      </p>
       <div class="mb-4">
         <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
         <input id="username" v-model="form.data.username" type="text"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+        <input id="email" v-model="form.data.email" type="email"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
       </div>
       <div class="mb-6">
@@ -21,23 +18,26 @@
         <input id="password" v-model="form.data.password" type="password"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" />
       </div>
-      <button type="submit"
-        :disabled="form.pending"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
+      <p v-if="form.error"
+        class="mb-3 px-3 py-1.5 w-full border rounded border-red-400 text-sm text-center text-red-400">
+        {{ form.error }}
+      </p>
+      <button type="submit" :disabled="form.pending"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
     </form>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useAuth } from '~/composables/useAuth'
+<script lang="ts" setup>
+import { useRegister } from '~/composables/useRegister';
 
-const { login } = useAuth()
+const { registerUser } = useRegister();
 
 const form = reactive({
   data: {
     username: '',
-    password: ''
+    email: '',
+    password: '',
   },
   error: '',
   pending: false,
@@ -48,21 +48,16 @@ const handleSubmit = async () => {
     form.error = '';
     form.pending = true;
 
-    await login(username.value, password.value);
+    await registerUser(username.value, email.value, password.value);
 
     const redirect = '/';
     await navigateTo(redirect);
-  } catch (error: any) {
+  } catch (error) {
     console.error(error.data.statusMessage);
     if (error.data.statusMessage) form.error = error.data.statusMessage;
   } finally {
     form.pending = false;
   }
-}
+};
 
-// ユーザ登録ページへの遷移
-const navigateToRegister = async () => {
-  const redirect = '/register';
-  await navigateTo(redirect);
-}
 </script>

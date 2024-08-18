@@ -1,26 +1,3 @@
-<script lang="ts" setup>
-const currentUser = useAuthUser();
-const { logout } = useAuth();
-
-const form = reactive({
-  pending: false,
-});
-
-const submitLogout = async() => {
-  try {
-    form.pending = true;
-
-    await logout();
-
-    await navigateTo("/");
-  } catch (error) {
-    console.error(error);
-  } finally {
-    form.pending = false;
-  }
-}
-</script>
-
 <template>
   <header class="bg-slate-900">
     <div class="p-3 mx-auto w-full max-w-4xl">
@@ -46,3 +23,26 @@ const submitLogout = async() => {
     </div>
   </header>
 </template>
+
+<script lang="ts" setup>
+const currentUser = useAuthUser();
+const { logout } = useAuth();
+
+const form = reactive({
+  pending: false,
+});
+
+const submitLogout = async() => {
+  try {
+    form.pending = true;
+
+    await logout();
+
+    await navigateTo("/");
+  } catch (error) {
+    console.error(error);
+  } finally {
+    form.pending = false;
+  }
+}
+</script>

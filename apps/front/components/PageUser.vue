@@ -1,9 +1,3 @@
-<script lang="ts" setup>
-import type { UserWithoutPassword } from "~/types";
-
-defineProps<{ user: UserWithoutPassword | null }>();
-</script>
-
 <template>
   <div class="p-4">
     <table class="w-full border-collapse">
@@ -16,3 +10,9 @@ defineProps<{ user: UserWithoutPassword | null }>();
     </table>
   </div>
 </template>
+
+<script lang="ts" setup>
+import type { UserWithoutPassword } from "~/types";
+
+defineProps<{ user: UserWithoutPassword | null }>();
+</script>

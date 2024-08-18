@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "apps/mise-user/src/main/java",
+        "apps/mise-user/src/test/java"
+    ],
+    "java.project.outputPath": "apps/mise-user/bin",
+    "java.compile.nullAnalysis.mode": "disabled",
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

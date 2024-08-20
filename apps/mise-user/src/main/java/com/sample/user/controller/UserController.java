@@ -42,4 +42,16 @@ public class UserController {
             return ResponseBuilder.buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<Map<String, Object>> deleteUser(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+
+        try {
+            userService.deleteUserByEmail(email);
+            return ResponseBuilder.buildSuccessResponse("User deleted successfully", null);
+        } catch (RuntimeException e) {
+            return ResponseBuilder.buildErrorResponse(HttpStatus.NOT_FOUND, "User not Found");
+        }
+    }
 }

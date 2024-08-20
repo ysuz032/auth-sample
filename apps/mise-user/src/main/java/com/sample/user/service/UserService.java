@@ -29,7 +29,7 @@ public class UserService {
 
     public void registerUser(String email, String name, String password) {
         if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException("Email is already in use.");
+            throw new RuntimeException("Email is already in use");
         }
 
         User user = new User();
@@ -46,5 +46,15 @@ public class UserService {
             throw e;
         }
         return;
+    }
+
+    public void deleteUserByEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if (userOptional.isPresent()) {
+            userRepository.delete(userOptional.get());
+        } else {
+            throw new RuntimeException("User not Found");
+        }
     }
 }

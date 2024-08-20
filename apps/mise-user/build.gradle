@@ -2,6 +2,10 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.2'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'checkstyle' // To check that code follow style standards
+	id 'pmd' // Static analysis based on source (does not check compiled code)
+	id 'com.github.spotbugs' version '6.0.20' // Static analysis based on compiled code (does not check source)
+	
 }
 
 group = 'com.sample'
@@ -26,6 +30,46 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.h2database:h2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.13.0'  // セキュリティに関連するバグを発見するプラグイン
+}
+
+checkstyle {
+    toolVersion = '10.17.0'
+    configFile = project(':').file('config/checkstyle/checkstyle.xml')
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.required.set(false)  // XMLレポートの生成を無効化
+        html.required.set(true)  // HTMLレポートの生成を有効化
+    }
+}
+
+pmd {
+    toolVersion = '7.4.0'  // PMDのバージョンを指定
+    ignoreFailures = false  // trueにすると、PMDの違反があってもビルドが失敗しない
+    consoleOutput = true    // trueにすると、結果をコンソールに表示
+    rulesMinimumPriority = 5
+	ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+	
+	// you can use it to adjust rules for your own project
+    // See https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html#org.gradle.api.plugins.quality.PmdExtension:ruleSetFiles
+    ruleSetFiles = files("config/pmd/ruleset.xml")  // 独自のルールセットファイルを指定
+}
+
+
+spotbugs {
+    effort = com.github.spotbugs.snom.Effort.MAX  // 解析の厳密さを指定: min, default, max
+    reportLevel = com.github.spotbugs.snom.Confidence.valueOf("LOW")  // 報告する問題の深刻度: low, medium, high
+	toolVersion = '4.8.6'  // SpotBugsのバージョンを指定
+    ignoreFailures = false  // trueにすると、問題が見つかってもビルドは失敗しない
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    reports {
+        xml.required.set(false)  // XMLレポートの生成を無効化
+        html.required.set(true)  // HTMLレポートの生成を有効化
+    }
 }
 
 tasks.named('test') {

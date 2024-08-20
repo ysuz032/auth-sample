@@ -15,12 +15,14 @@ services:
       context: ./mise-user
       dockerfile: Dockerfile
     environment:
-      - ENV=development
-      - DB_HOST=db
-      - DB_USERNAME=admin
-      - DB_PASSWORD=adP@ssmin
+      ENV: development
+      DB_HOST: db
+      DB_USERNAME: admin
+      DB_PASSWORD: adP@ssmin
+      # JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
     ports:
       - "8080:8080"
+      # - "5005:5005"  # デバッグポートを公開
     depends_on:
       - db
   

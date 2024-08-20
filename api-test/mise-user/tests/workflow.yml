@@ -1,0 +1,87 @@
+version: '1.1'
+name: mise-user api test
+
+# Define environment variables that can be used throughout the tests
+env:
+  base_url: http://localhost:8080
+
+tests:
+  all:
+    steps:
+      - name: Register User - Success
+        http:
+          url: ${{env.base_url}}/register
+          method: POST
+          json:
+            email: testuser@example.com
+            name: John Doe
+            password: securepassword
+          check:
+            status: 200
+            jsonpath:
+              $.status: 200
+              $.message: User registered successfully
+      
+      - name: Get User by Email - Success
+        http:
+          url: ${{env.base_url}}/user
+          method: POST
+          json:
+            email: testuser@example.com
+          check:
+            status: 200
+            jsonpath:
+              $.status: 200
+              $.message: Login successful
+              $.data.email: testuser@example.com
+              $.data.name: John Doe
+
+      - name: Get User by Email - Not Found
+        http:
+          url: ${{env.base_url}}/user
+          method: POST
+          json:
+            email: nonexistent@example.com
+          check:
+            status: 404
+            jsonpath:
+              $.status: 404
+              $.message: User not Found
+
+      - name: Register User - Email Already in Use
+        http:
+          url: ${{env.base_url}}/register
+          method: POST
+          json:
+            email: testuser@example.com
+            name: John Doe
+            password: securepassword
+          check:
+            status: 409
+            jsonpath:
+              $.status: 409
+              $.message: Email is already in use
+      
+      - name: Delete User - Success
+        http:
+          url: ${{env.base_url}}/delete
+          method: POST
+          json:
+            email: testuser@example.com
+          check:
+            status: 200
+            jsonpath:
+              $.status: 200
+              $.message: User deleted successfully
+
+      - name: Delete User - Not Found
+        http:
+          url: ${{env.base_url}}/delete
+          method: POST
+          json:
+            email: nonexistent@example.com
+          check:
+            status: 404
+            jsonpath:
+              $.status: 404
+              $.message: User not Found

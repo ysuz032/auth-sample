@@ -12,7 +12,5 @@
 </template>
 
 <script lang="ts" setup>
-import type { UserWithoutPassword } from "~/types";
-
 defineProps<{ user: UserWithoutPassword | null }>();
 </script>

@@ -34,7 +34,6 @@
 </template>
 
 <script lang="ts" setup>
-
 const { registerUser } = useUser();
 
 const form = reactive({

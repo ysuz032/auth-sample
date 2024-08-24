@@ -51,13 +51,16 @@ const handleSubmit = async () => {
     form.error = '';
     form.pending = true;
 
-    await registerUser(username.value, email.value, password.value);
+    await registerUser(form.data.username, form.data.email, form.data.password);
 
     const redirect = '/';
     await navigateTo(redirect);
-  } catch (error) {
-    console.error(error.data.statusMessage);
-    if (error.data.statusMessage) form.error = error.data.statusMessage;
+  } catch (error: any) {
+    if (error.statusMessage) {
+      form.error = error.statusMessage;
+    } else {
+      form.error = 'An unexpected error occurred.';
+    }
   } finally {
     form.pending = false;
   }

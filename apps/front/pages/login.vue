@@ -8,8 +8,8 @@
         {{ form.error }}
       </p>
       <div class="mb-4">
-        <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
-        <input id="username" v-model="form.data.username" type="text"
+        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+        <input id="email" v-model="form.data.email" type="text"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
       </div>
       <div class="mb-6">
@@ -35,7 +35,7 @@ const { login } = useUser()
 
 const form = reactive({
   data: {
-    username: '',
+    email: '',
     password: ''
   },
   error: '',
@@ -47,7 +47,7 @@ const handleSubmit = async () => {
     form.error = '';
     form.pending = true;
 
-    await login(username.value, password.value);
+    await login(email.value, password.value);
 
     const redirect = '/';
     await navigateTo(redirect);

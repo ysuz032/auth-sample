@@ -40,11 +40,11 @@ export default defineEventHandler(async (event: H3Event) => {
     console.error('Login API call failed:', error);
     // APIエラーの場合ステータスとメッセージを送信
     if (isFetchError(error)) {
-      sendError(event, createError({ statusCode: error.response?.status || 500, statusMessage: error.response?._data?.message || 'Error message parsing failed' }));
+      throw createError({ statusCode: error.response?.status || 500, statusMessage: error.response?._data?.message || 'Error message parsing failed' });
     } else if (isAuthError(error)) {
-      sendError(event, createError({ statusCode: 401, statusMessage: error.message }));
+      throw createError({ statusCode: 401, statusMessage: error.message });
     } else {
-      sendError(event, createError({ statusCode: 500, statusMessage: 'Login failed' }));
+      throw createError({ statusCode: 500, statusMessage: 'Login failed' });
     }
   }
 })

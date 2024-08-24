@@ -8,11 +8,13 @@
     </div>
     <div v-else class="text-center">
       <p class="text-xl">You are not logged in.</p>
-      <nuxt-link to="/login" class="text-blue-500 hover:underline">Login</nuxt-link>
+      <PageLink to="/login" >Login</PageLink>
+      <!-- <nuxt-link to="/login" class="text-blue-500 hover:underline">Login</nuxt-link> -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-const currentUser = useAuthUser();
+const { getCurrentUser } = useUser()
+const currentUser = getCurrentUser();
 </script>

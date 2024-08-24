@@ -22,16 +22,20 @@
         class="mb-3 px-3 py-1.5 w-full border rounded border-red-400 text-sm text-center text-red-400">
         {{ form.error }}
       </p>
-      <button type="submit" :disabled="form.pending"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
+      <div class="flex items-center justify-center">
+        <button type="submit" :disabled="form.pending"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Register
+        </button>
+      </div>
+
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useRegister } from '~/composables/useRegister';
 
-const { registerUser } = useRegister();
+const { registerUser } = useUser();
 
 const form = reactive({
   data: {

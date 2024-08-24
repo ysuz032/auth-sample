@@ -25,8 +25,9 @@
 </template>
 
 <script lang="ts" setup>
-const currentUser = useAuthUser();
-const { logout } = useAuth();
+const { getCurrentUser, logout } = useUser();
+const currentUser = getCurrentUser();
+
 
 const form = reactive({
   pending: false,

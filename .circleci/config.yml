@@ -151,5 +151,5 @@ workflows:
     jobs:
       - deploy
       - e2e-test:
-        requires:
-          - deploy
+         requires:
+           - deploy

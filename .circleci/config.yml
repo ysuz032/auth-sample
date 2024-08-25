@@ -1,7 +1,5 @@
 version: 2.1
 
-setup: true
-
 executors:
   default:
     working_directory: ~/project

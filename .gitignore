@@ -206,6 +206,8 @@ dist/
 npm-debug.log
 yarn-error.log
 
+coverage/
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db

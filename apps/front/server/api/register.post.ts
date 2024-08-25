@@ -5,8 +5,7 @@ import { isFetchError } from '~/server/utils/fetchError';
 
 export default defineEventHandler(async (event: H3Event) => {
   try {
-    const config = useRuntimeConfig();
-    const apiUrl = config.apiBaseUrl;
+    const { apiBaseUrl } = useRuntimeConfig();
 
     const body = await readBody<{ email: string; password: string; username: string; }>(event);
 
@@ -16,7 +15,7 @@ export default defineEventHandler(async (event: H3Event) => {
     const hashedPassword = await hash(password);
 
     // Spring BootのバックエンドAPIエンドポイントにデータを送信
-    const response = await $fetch(`${apiUrl}/register`, {
+    const response = await $fetch(`${apiBaseUrl}/register`, {
       method: 'POST',
       body: {
         email: email,

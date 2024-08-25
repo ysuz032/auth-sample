@@ -7,15 +7,14 @@ import { isFetchError } from '~/server/utils/fetchError';
 import { AuthError, isAuthError } from '~/server/utils/authError';
 
 export default defineEventHandler(async (event: H3Event) => {
-  const config = useRuntimeConfig();
-  const apiUrl = config.apiBaseUrl;
+  const { apiBaseUrl } = useRuntimeConfig();
 
   const body = await readBody<{ email: string; password: string; }>(event);
 
   const { email, password } = body;
 
   try {
-    const response = await $fetch<UserResponse>(`${apiUrl}/user`, {
+    const response = await $fetch<UserResponse>(`${apiBaseUrl}/user`, {
       method: 'POST',
       body: {
         email: email,

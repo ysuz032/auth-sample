@@ -150,6 +150,6 @@ workflows:
   deploy-and-e2e-test:
     jobs:
       - deploy
-      - e2e-test
+      - e2e-test:
         requires:
           - deploy

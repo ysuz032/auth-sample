@@ -1,10 +1,10 @@
 // server/api/login.post.ts
 import { H3Event, sendError } from 'h3';
 import { defineEventHandler, readBody } from 'h3';
-import { UserResponse } from '../types/userResponse';
-import { isFetchError } from '~~/utils/fetchError';
-import { verify } from '~~/utils/password';
-import { AuthError, isAuthError } from '~~/utils/authError';
+import { UserResponse } from '~/server/types/userResponse';
+import { verify } from '~/server/utils/password';
+import { isFetchError } from '~/server/utils/fetchError';
+import { AuthError, isAuthError } from '~/server/utils/authError';
 
 export default defineEventHandler(async (event: H3Event) => {
   const config = useRuntimeConfig();

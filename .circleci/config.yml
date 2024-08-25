@@ -131,7 +131,7 @@ jobs:
           command: make e2e-test
   
   deploy:
-    executor: default
+    executor: node-executor
     steps:
       - checkout
       - run:

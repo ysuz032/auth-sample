@@ -90,7 +90,7 @@ jobs:
 
   # API Tests Job
   api-test:
-    executor: default
+    executor: java-executor
     steps:
       - checkout
       - run:
@@ -102,7 +102,7 @@ jobs:
 
   # E2E Tests Job
   e2e-test:
-    executor: default
+    executor: java-executor
     steps:
       - checkout
       - run:

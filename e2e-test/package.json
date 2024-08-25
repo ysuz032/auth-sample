@@ -1,0 +1,16 @@
+{
+  "name": "e2e-test",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@nuxt/test-utils": "^3.14.1",
+    "@playwright/test": "^1.46.1",
+    "@types/node": "^22.5.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.4"
+  }
+}

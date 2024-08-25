@@ -6,6 +6,7 @@ FRONT_DIR = apps/front
 BACKEND_DIR = apps/mise-user
 DB_DIR = apps/db-user
 API_TEST_DIR = api-test/mise-user
+E2E_TEST_DIR = e2e-test
 
 # デフォルトターゲット
 .DEFAULT_GOAL := help
@@ -21,6 +22,7 @@ help:
 	@echo "  build                  Build both front-end and back-end applications"
 	@echo "  up                     Start all services using Docker Compose"
 	@echo "  down                   Stop all services using Docker Compose"
+	@echo "  status                  Display the status of all Docker Compose services"
 	@echo "  front-build            Build the front-end application"
 	@echo "  front-dev              Start the front-end application in development mode"
 	@echo "  front-test             Run front-end tests including unit tests with coverage and linting"
@@ -37,6 +39,7 @@ help:
 	@echo "  backend-spotbugs       Run back-end static analysis with SpotBugs"
 	@echo "  db-init                Initialize the database service using Docker Compose"
 	@echo "  api-test               Run API tests for the mise-user application"
+	@echo "  e2e-test               Run end-to-end (E2E) tests for the application"
 
 ## アプリケーションのビルド
 .PHONY: build
@@ -51,6 +54,11 @@ up: backend-build
 .PHONY: down
 down:
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down
+
+## Docker Compose を使用してサービスのステータスを表示
+.PHONY: status
+status:
+	docker-compose -f $(DOCKER_COMPOSE_FILE) ps -a
 
 ## フロントエンドのビルド
 .PHONY: front-build
@@ -129,3 +137,8 @@ db-init:
 .PHONY: api-test
 api-test: up
 	cd $(API_TEST_DIR) && ./run-test.sh
+
+## E2E テストの実行
+.PHONY: e2e-test
+e2e-test: up
+	cd $(E2E_TEST_DIR) && ./run-test.sh

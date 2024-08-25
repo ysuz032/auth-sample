@@ -1,0 +1,155 @@
+version: 2.1
+
+setup: true
+
+executors:
+  default:
+    working_directory: ~/project
+    docker:
+      - image: cimg/base:stable
+  node-executor:
+    working_directory: ~/project
+    docker:
+      - image: cimg/node:lts
+
+  java-executor:
+    working_directory: ~/project
+    docker:
+      - image: cimg/openjdk:21.0
+
+jobs:
+  # Frontend Build Job
+  front-build:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: make front-build
+
+  # Backend Build Job
+  backend-build:
+    executor: java-executor
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: make backend-build
+  
+  # Frontend unit test job
+  front-unittest:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Run frontend tests
+          command: make front-unittest-coverage
+
+  # Backend unit test job
+  backend-unittest:
+    executor: java-executor
+    steps:
+      - checkout
+      - run:
+          name: Run backend tests
+          command: make backend-unittest
+
+  # Frontend lint job
+  front-stylecheck:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Run frontend lint
+          command: make front-lint
+
+  # Backend checkstyle job
+  backend-stylecheck:
+    executor: java-executor
+    steps:
+      - checkout
+      - run:
+          name: Run backend checkstyle
+          command: make backend-checkstyle
+
+  # Backend pmd job
+  backend-static-analyze-pmd:
+    executor: java-executor
+    steps:
+      - checkout
+      - run:
+          name: Run backend static analyze(pmd)
+          command: make backend-pmd
+
+  # Backend spotbugs job
+  backend-static-analyze-spotbugs:
+    executor: java-executor
+    steps:
+      - checkout
+      - run:
+          name: Run backend static analyze(spotbugs)
+          command: make backend-spotbugs
+
+  # API Tests Job
+  api-test:
+    executor: default
+    steps:
+      - checkout
+      - run:
+          name: Start all services
+          command: make up
+      - run:
+          name: Run API tests
+          command: make api-test
+
+  # E2E Tests Job
+  e2e-test:
+    executor: default
+    steps:
+      - checkout
+      - run:
+          name: Start all services
+          command: make up
+      - run:
+          name: Run E2E tests
+          command: make e2e-test
+  
+  deploy:
+    executor: default
+    steps:
+      - checkout
+      - run:
+          name: Deploy
+          command: echo "skip ${CIRCLE_JOB} job."
+
+workflows:
+  build:
+    jobs:
+      - front-build
+      - backend-build
+
+  unit-test:
+    jobs:
+      - front-unittest
+      - backend-unittest
+
+  stylecheck:
+    jobs:
+      - front-stylecheck
+      - backend-stylecheck
+  
+  static-analyze:
+    jobs:
+      - backend-static-analyze-pmd
+      - backend-static-analyze-spotbugs
+  
+  api-test:
+    jobs:
+      - api-test
+  
+  deploy-and-e2e-test:
+    jobs:
+      - deploy
+      - e2e-test
+        requires:
+          - deploy

@@ -22,7 +22,7 @@ help:
 	@echo "  build                  Build both front-end and back-end applications"
 	@echo "  up                     Start all services using Docker Compose"
 	@echo "  down                   Stop all services using Docker Compose"
-	@echo "  status                  Display the status of all Docker Compose services"
+	@echo "  status                 Display the status of all Docker Compose services"
 	@echo "  front-build            Build the front-end application"
 	@echo "  front-dev              Start the front-end application in development mode"
 	@echo "  front-test             Run front-end tests including unit tests with coverage and linting"
@@ -30,6 +30,7 @@ help:
 	@echo "  front-unittest-coverage Run front-end unit tests with coverage reporting"
 	@echo "  front-lint             Run front-end linter to check code style"
 	@echo "  front-lint-fix         Fix linting issues in the front-end code"
+	@echo "  backend-gradle-setup   Setup Gradle wrapper for the backend application"
 	@echo "  backend-build          Build the back-end application (creates bootable JAR)"
 	@echo "  backend-run            Run the back-end application"
 	@echo "  backend-test           Run all back-end tests including unit tests, Checkstyle, PMD, and SpotBugs"
@@ -93,6 +94,11 @@ front-lint:
 .PHONY: front-lint-fix
 front-lint-fix:
 	cd $(FRONT_DIR) && yarn install && yarn lint:fix
+
+## バックエンドのGradleセットアップ
+.PHONY: backend-gradle-setup
+backend-gradle-setup:
+	cd $(BACKEND_DIR) && gradle wrapper
 
 ## バックエンドのビルド
 .PHONY: backend-build

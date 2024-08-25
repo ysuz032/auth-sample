@@ -18,7 +18,9 @@ executors:
 commands:
   setup-gradle:
     steps:
-      - run: gradle wrapper
+      - run:
+          name: Setup gradle wrapper
+          command: make backend-gradle-setup
 
 jobs:
   # Frontend Build Job

@@ -30,7 +30,8 @@
 			"extensions": [
 				"Vue.volar",
 				"mhutchie.git-graph",
-				"eamodio.gitlens"
+				"eamodio.gitlens",
+				"ms-vscode.makefile-tools"
 			]
 		}
 	},

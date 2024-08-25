@@ -15,6 +15,11 @@ executors:
     docker:
       - image: cimg/openjdk:21.0
 
+commands:
+  setup-gradle:
+    steps:
+      - run: gradle wrapper
+
 jobs:
   # Frontend Build Job
   front-build:
@@ -30,6 +35,7 @@ jobs:
     executor: java-executor
     steps:
       - checkout
+      - setup-gradle
       - run:
           name: Build
           command: make backend-build
@@ -48,6 +54,7 @@ jobs:
     executor: java-executor
     steps:
       - checkout
+      - setup-gradle
       - run:
           name: Run backend tests
           command: make backend-unittest
@@ -66,6 +73,7 @@ jobs:
     executor: java-executor
     steps:
       - checkout
+      - setup-gradle
       - run:
           name: Run backend checkstyle
           command: make backend-checkstyle
@@ -75,6 +83,7 @@ jobs:
     executor: java-executor
     steps:
       - checkout
+      - setup-gradle
       - run:
           name: Run backend static analyze(pmd)
           command: make backend-pmd
@@ -84,6 +93,7 @@ jobs:
     executor: java-executor
     steps:
       - checkout
+      - setup-gradle
       - run:
           name: Run backend static analyze(spotbugs)
           command: make backend-spotbugs
@@ -93,6 +103,7 @@ jobs:
     executor: java-executor
     steps:
       - checkout
+      - setup-gradle
       - run:
           name: Start all services
           command: make up
@@ -105,6 +116,7 @@ jobs:
     executor: java-executor
     steps:
       - checkout
+      - setup-gradle
       - run:
           name: Start all services
           command: make up

@@ -106,6 +106,7 @@ jobs:
     steps:
       - checkout
       - setup-gradle
+      - setup_remote_docker
       - run:
           name: Start all services
           command: make up
@@ -119,6 +120,7 @@ jobs:
     steps:
       - checkout
       - setup-gradle
+      - setup_remote_docker
       - run:
           name: Start all services
           command: make up

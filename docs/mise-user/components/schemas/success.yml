@@ -1,0 +1,25 @@
+default:
+  type: object
+  required:
+    - status
+    - message
+  properties:
+    status:
+      type: integer
+      format: int32
+    message:
+      type: string
+
+successWithUser:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+    message:
+      type: string
+    data:
+      $ref: 'user.yml#/user'

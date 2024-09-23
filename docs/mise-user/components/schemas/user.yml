@@ -1,0 +1,16 @@
+user:
+  type: object
+  required:
+    - id
+    - email
+    - name
+    - password
+  properties:
+    id:
+      type: string
+    email:
+      type: string
+    name:
+      type: string
+    password:
+      type: string

@@ -1,175 +1,40 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: User API
   description: API for managing users, including user registration, retrieval, and deletion.
   version: 1.0.0
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost
+security:
+  - ApiKeyAuth: []
 paths:
   /user:
-    post:
-      summary: Get User by Email
-      description: Retrieves user information by email.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: user@example.com
-              required:
-                - email
-      responses:
-        '200':
-          description: Successful response with user data.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 200
-                  message:
-                    type: string
-                    example: Login successful
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: "1"
-                      email:
-                        type: string
-                        example: user@example.com
-                      name:
-                        type: string
-                        example: John Doe
-                      password:
-                        type: string
-                        example: hashed_password
-        '404':
-          description: User not found.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 404
-                  message:
-                    type: string
-                    example: User not Found
+    $ref: './paths/user.yml'
   /register:
-    post:
-      summary: Register a New User
-      description: Registers a new user with the provided details.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: user@example.com
-                name:
-                  type: string
-                  example: John Doe
-                password:
-                  type: string
-                  example: securepassword
-              required:
-                - email
-                - name
-                - password
-      responses:
-        '200':
-          description: User registered successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 200
-                  message:
-                    type: string
-                    example: User registered successfully
-        '409':
-          description: Conflict - Email already in use.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 409
-                  message:
-                    type: string
-                    example: Email is already in use
+    $ref: './paths/register.yml'
   /delete:
-    post:
-      summary: Delete User by Email
-      description: Deletes a user by email.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: user@example.com
-              required:
-                - email
-      responses:
-        '200':
-          description: User deleted successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 200
-                  message:
-                    type: string
-                    example: User deleted successfully
-        '404':
-          description: User not found.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 404
-                  message:
-                    type: string
-                    example: User not Found
+    $ref: './paths/delete.yml'
 components:
   schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          example: "1"
-        email:
-          type: string
-          example: user@example.com
-        name:
-          type: string
-          example: John Doe
-        password:
-          type: string
-          example: hashed_password
+    user:
+      $ref: './components/schemas/user.yml#/user'
+    successWithUser:
+      $ref: './components/schemas/success.yml#/successWithUser'
+    success:
+      $ref: './components/schemas/success.yml#/default'
+    error:
+      $ref: './components/schemas/error.yml#/default'
+    userRequestBody:
+      $ref: './components/requestBody/user.yml#/email'
+    registerRequestBody:
+      $ref: './components/requestBody/register.yml#/userWithoutId'
+    delteRequestBody:
+      $ref: './components/requestBody/delete.yml#/email'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

@@ -1,0 +1,10 @@
+request:
+  summary: Delete request
+  value:
+    email: user@example.com
+
+response:
+  summary: Delete response
+  value:
+    status: 200
+    message: User deleted successfully

@@ -1,0 +1,11 @@
+userNotFound:
+  summary: Example of user not found error response
+  value:
+    status: 404
+    message: User not found
+
+emailAlreadyExists:
+  summary: Example of user not found error response
+  value:
+    status: 409
+    message: Email is already in use

@@ -1,0 +1,13 @@
+userWithoutId:
+  type: object
+  required:
+    - email
+    - name
+    - password
+  properties:
+    email:
+      type: string
+    name:
+      type: string
+    password:
+      type: string

@@ -1,0 +1,11 @@
+default:
+  type: object
+  required:
+    - status
+    - message
+  properties:
+    status:
+      type: integer
+      format: int32
+    message:
+      type: string

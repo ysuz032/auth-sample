@@ -1,0 +1,12 @@
+request:
+  summary: Register request
+  value:
+    email: user@example.com
+    name: John Doe
+    password: securepassword
+
+response:
+  summary: Success response
+  value:
+    status: 200
+    message: User registered successfully

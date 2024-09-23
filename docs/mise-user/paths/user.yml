@@ -1,0 +1,32 @@
+post:
+  summary: Get User by Email
+  description: Retrieves user information by email.
+  operationId: getUser
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/requestBody/user.yml#/email'
+        examples:
+          userRequest:
+            $ref: '../components/examples/user.yml#/request'
+  responses:
+    '200':
+      description: Successful response with user data.
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/success.yml#/successWithUser'
+          examples:
+            userResponse:
+              $ref: '../components/examples/user.yml#/response'
+    '404':
+      description: User not found.
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yml#/default'
+          examples:
+            user404Error:
+              $ref: '../components/examples/error.yml#/userNotFound'

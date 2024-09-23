@@ -1,0 +1,32 @@
+post:
+  summary: Register a New User
+  description: Registers a new user with the provided details.
+  operationId: registe
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/requestBody/register.yml#/userWithoutId'
+        examples:
+          registerRequest:
+            $ref: '../components/examples/register.yml#/request'
+  responses:
+    '200':
+      description: User registered successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/success.yml#/default'
+          examples:
+            registerResponse:
+              $ref: '../components/examples/register.yml#/response'
+    '409':
+      description: Conflict - Email already in use.
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yml#/default'
+          examples:
+            register490Error:
+              $ref: '../components/examples/error.yml#/emailAlreadyExists'

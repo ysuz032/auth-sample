@@ -1,0 +1,32 @@
+post:
+  summary: Delete User by Email
+  description: Deletes a user by email.
+  operationId: delete
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/requestBody/delete.yml#/email'
+        examples:
+          deleteRequest:
+            $ref: '../components/examples/delete.yml#/request'
+  responses:
+    '200':
+      description: User deleted successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/success.yml#/default'
+          examples:
+            deleteResponse:
+              $ref: '../components/examples/delete.yml#/response'
+    '404':
+      description: User not found.
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yml#/default'
+          examples:
+            delete404Error:
+              $ref: '../components/examples/error.yml#/userNotFound'
